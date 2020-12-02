@@ -108,6 +108,7 @@ class TaskboardController extends mixOf(taiga.Controller, taiga.PageMixin, taiga
         previousZoomLevel = @.zoomLevel
 
         @.zoomLevel = zoomLevel
+        console.log(zoomLevel, zoom)
         @.zoom = zoom
 
         if @.isFirstLoad
@@ -120,9 +121,6 @@ class TaskboardController extends mixOf(taiga.Controller, taiga.PageMixin, taiga
             @q.all([@.loadTasks(), @.loadIssues()]).then () =>
                 @.zoomLoading = false
                 @taskboardTasksService.resetFolds()
-
-        if @.zoomLevel == '0'
-            @rootscope.$broadcast("sprint:zoom0")
 
     changeQ: (q) ->
         @.filterQ = q
@@ -778,10 +776,12 @@ TaskboardSquishColumnDirective = (rs) ->
     zoom0ColumnWidth = 182
     minWidth = 62 # avatarWidth + padding
     maxRows = 3
+    firstLoad = false
 
     link = ($scope, $el, $attrs) ->
-        $scope.$on "sprint:zoom0", () =>
-            recalculateTaskboardWidth()
+        $scope.$watch "ctrl.zoom", () =>
+            if firstLoad
+                recalculateTaskboardWidth()
 
         $scope.$on "sprint:task:moved", () =>
             recalculateTaskboardWidth()
@@ -870,6 +870,11 @@ TaskboardSquishColumnDirective = (rs) ->
             , 0
 
             $el.find('.taskboard-table-inner').css("width", maxColumnWidth + total)
+            if !firstLoad
+                requestAnimationFrame () ->
+                    $el.addClass('animations')
+
+            firstLoad = true
 
             return
 

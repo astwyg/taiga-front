@@ -115,6 +115,14 @@ $fold-animation-duration: .1s;
             }
         }
     }
+    &.animations {
+        .task-colum-name {
+            transition: all $fold-animation-duration linear;
+        }
+        .taskboard-table-body .taskboard-column {
+            transition: all .1s linear;
+        }
+    }
     .task-colum-name {
         @include font-size(small);
         align-items: center;
@@ -129,7 +137,6 @@ $fold-animation-duration: .1s;
         max-width: $column-width;
         padding: $column-padding;
         text-transform: uppercase;
-        transition: all $fold-animation-duration linear;
         width: 100%;
         &:first-child {
             background-color: $white;
@@ -192,7 +199,6 @@ $fold-animation-duration: .1s;
         margin: $column-margin;
         max-width: $column-width;
         padding: 1rem;
-        transition: all .1s linear;
         width: 100%;
         &:last-child {
             margin-right: 0;
