@@ -21,7 +21,7 @@ $fold-animation-duration: .1s;
 
 
 @mixin fold {
-    &.taskboard-row  {
+    &.taskboard-row {
         min-height: 65px;
     }
 
@@ -54,7 +54,7 @@ $fold-animation-duration: .1s;
         .card-blocked {
             border-color: transparent;
         }
-        tg-card-assigned-to
+        tg-card-assigned-to,
         .card-assigned-to {
             padding: 0;
             pointer-events: none;
@@ -79,6 +79,15 @@ $fold-animation-duration: .1s;
         .us-subject {
             color: $color-black600;
         }
+    }
+    .us-subject {
+        /* stylelint-disable property-no-vendor-prefix, value-no-vendor-prefix */
+        -webkit-box-orient: vertical;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        overflow: hidden;
+        overflow-wrap: break-word;
+        /* stylelint-enable property-no-vendor-prefix, value-no-vendor-prefix */
     }
 }
 
@@ -111,7 +120,7 @@ $fold-animation-duration: .1s;
         align-items: center;
         background-color: $color-gray100;
         border-bottom: 3px solid $color-gray200;
-        border-radius: 4px 4px 0px 0px;
+        border-radius: 4px 4px 0 0;
         color: $color-black900;
         display: flex;
         flex-grow: $column-flex;
@@ -255,6 +264,8 @@ $fold-animation-duration: .1s;
     }
     .us-ref {
         color: $color-link-primary;
+        float: left;
+        padding-right: .25rem;
     }
     .us-subject {
         color: $color-black900;
@@ -264,6 +275,36 @@ $fold-animation-duration: .1s;
         @include font-type(regular);
         margin-bottom: 0;
         margin-right: 3rem;
+    }
+    .us-data {
+        align-items: center;
+        display: flex;
+
+        svg {
+            display: block;
+        }
+
+        p {
+            margin: 0;
+
+            &:not(:last-child) {
+                margin-right: .5rem;
+            }
+        }
+
+        .status-value {
+            margin-left: auto;
+        }
+
+        tg-due-date {
+            margin-right: .5rem;
+        }
+
+        .card-lock {
+            svg {
+                fill: $color-link-red;
+            }
+        }
     }
     .status-value {
         @include font-size(small);
@@ -315,13 +356,15 @@ $fold-animation-duration: .1s;
         padding: .5rem;
         position: relative;
 
-        tg-svg {
-            position: absolute;
-            right: .5rem;
-            top: .7rem;
+        .add-new-task {
+            tg-svg {
+                position: absolute;
+                right: .5rem;
+                top: .7rem;
 
-            &.add-action {
-                right: 2rem;
+                &.add-action {
+                    right: 2rem;
+                }
             }
         }
     }

@@ -78,10 +78,6 @@ div.taskboard-table(
                                     ng-if="!us.total_points",
                                     translate="US.NOT_ESTIMATED"
                                 )
-                            p.status-value(ng-if="usStatusById[us.status]")
-                                span(
-                                ng-style="{'color': usStatusById[us.status]['color']}"
-                                ng-bind="usStatusById[us.status]['name']")
 
                             tg-due-date.due-date(
                                 due-date="us.due_date"
@@ -89,7 +85,17 @@ div.taskboard-table(
                                 ng-if="us.due_date"
                                 obj-type="us"
                             )
-                        include ../components/addnewtask
+
+                            span.card-lock(ng-if="us.is_blocked")
+                                tg-svg(svg-icon="icon-lock")
+
+                            p.status-value(ng-if="usStatusById[us.status]")
+                                span(
+                                ng-style="{'color': usStatusById[us.status]['color']}"
+                                ng-bind="usStatusById[us.status]['name']")
+
+                        .add-new-task
+                            include ../components/addnewtask
 
 
                 div.taskboard-cards-box.taskboard-column(
